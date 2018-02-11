@@ -122,6 +122,30 @@ public class DistanceTest {
         assertThat(a.dividedBy(b)).isEqualTo(expected);
     }
 
+    @Test
+    public void comparesDistance() throws Exception {
+        Distance a = Distance.ofMeters(10);
+        Distance b = Distance.ofMeters(20);
+
+        assertThat(a.compareTo(b)).isEqualTo(-1);
+    }
+
+    @Test
+    public void comparesDistance2() throws Exception {
+        Distance a = Distance.ofMeters(20);
+        Distance b = Distance.ofMeters(10);
+
+        assertThat(a.compareTo(b)).isEqualTo(1);
+    }
+
+    @Test
+    public void comparesEqualDistance() throws Exception {
+        Distance a = Distance.ofMeters(20);
+        Distance b = Distance.ofMeters(20);
+
+        assertThat(a.compareTo(b)).isEqualTo(0);
+    }
+
     @Test(expected = DistanceParseException.class)
     public void throwsErrorWithBadParsing() throws Exception {
         Distance.parse("BAD INPUT");

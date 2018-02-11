@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 import static java.util.regex.Pattern.CASE_INSENSITIVE;
 
-public class Distance {
+public class Distance implements Comparable<Distance> {
     public static final double MILE_TO_METER = 1609.34;
     public static final double YARD_TO_METER = 0.9144;
     public static final double FEET_TO_METER = 0.3048;
@@ -86,6 +86,11 @@ public class Distance {
 
     public long getDistanceMeter() {
         return distanceMeter;
+    }
+
+    @Override
+    public int compareTo(Distance o) {
+        return Long.compare(distanceMeter, o.distanceMeter);
     }
 
     @Override
