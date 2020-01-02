@@ -84,8 +84,24 @@ public class Distance implements Comparable<Distance> {
         return (double) distanceMeter / divisor.distanceMeter;
     }
 
-    public long getDistanceMeter() {
+    public long getMeters() {
         return distanceMeter;
+    }
+
+    public double toKilometers() {
+        return distanceMeter / 1000.0;
+    }
+
+    public double toMiles() {
+        return distanceMeter / MILE_TO_METER;
+    }
+
+    public double toFeet() {
+        return distanceMeter / FEET_TO_METER;
+    }
+
+    public double toYards() {
+        return distanceMeter / YARD_TO_METER;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.weizilla.distance;
 
+import org.assertj.core.data.Offset;
 import org.junit.Test;
 
 import static com.weizilla.distance.DistanceUnit.FEET;
@@ -14,9 +15,9 @@ public class DistanceTest {
     public void createsWithMeter() throws Exception {
         long meter = 100;
         Distance distance = Distance.ofMeters(meter);
-        assertThat(distance.getDistanceMeter()).isEqualTo(meter);
+        assertThat(distance.getMeters()).isEqualTo(meter);
         distance = Distance.of(meter, METER);
-        assertThat(distance.getDistanceMeter()).isEqualTo(meter);
+        assertThat(distance.getMeters()).isEqualTo(meter);
     }
 
     @Test
@@ -24,12 +25,14 @@ public class DistanceTest {
         long km = 100;
         long m = 1000 * km;
         Distance distance = Distance.ofKilometers(km);
-        assertThat(distance.getDistanceMeter()).isEqualTo(m);
+        assertThat(distance.getMeters()).isEqualTo(m);
         assertThat(distance).isEqualTo(Distance.ofMeters(m));
 
         distance = Distance.of(km, KILOMETER);
-        assertThat(distance.getDistanceMeter()).isEqualTo(m);
+        assertThat(distance.getMeters()).isEqualTo(m);
         assertThat(distance).isEqualTo(Distance.ofMeters(m));
+
+        assertThat(distance.toKilometers()).isEqualTo(km);
     }
 
     @Test
@@ -37,12 +40,14 @@ public class DistanceTest {
         double mi = 100;
         long m = 160934;
         Distance distance = Distance.ofMiles(mi);
-        assertThat(distance.getDistanceMeter()).isEqualTo(m);
+        assertThat(distance.getMeters()).isEqualTo(m);
         assertThat(distance).isEqualTo(Distance.ofMeters(m));
 
         distance = Distance.of(mi, MILE);
-        assertThat(distance.getDistanceMeter()).isEqualTo(m);
+        assertThat(distance.getMeters()).isEqualTo(m);
         assertThat(distance).isEqualTo(Distance.ofMeters(m));
+
+        assertThat(distance.toMiles()).isEqualTo(mi);
     }
 
     @Test
@@ -50,12 +55,15 @@ public class DistanceTest {
         double yd = 100;
         long m = 91;
         Distance distance = Distance.ofYards(yd);
-        assertThat(distance.getDistanceMeter()).isEqualTo(m);
+        assertThat(distance.getMeters()).isEqualTo(m);
         assertThat(distance).isEqualTo(Distance.ofMeters(m));
 
         distance = Distance.of(yd, YARD);
-        assertThat(distance.getDistanceMeter()).isEqualTo(m);
+        assertThat(distance.getMeters()).isEqualTo(m);
         assertThat(distance).isEqualTo(Distance.ofMeters(m));
+
+        double expectedYd = 99.5188; // 1 meter resolution
+        assertThat(distance.toYards()).isCloseTo(expectedYd, Offset.offset(0.1));
     }
 
     @Test
@@ -63,12 +71,15 @@ public class DistanceTest {
         double ft = 100;
         long m = 30;
         Distance distance = Distance.ofFeet(ft);
-        assertThat(distance.getDistanceMeter()).isEqualTo(m);
+        assertThat(distance.getMeters()).isEqualTo(m);
         assertThat(distance).isEqualTo(Distance.ofMeters(m));
 
         distance = Distance.of(ft, FEET);
-        assertThat(distance.getDistanceMeter()).isEqualTo(m);
+        assertThat(distance.getMeters()).isEqualTo(m);
         assertThat(distance).isEqualTo(Distance.ofMeters(m));
+
+        double expectedFt = 98.4252; // 1 meter resolution
+        assertThat(distance.toFeet()).isCloseTo(expectedFt, Offset.offset(0.1));
     }
 
     @Test
